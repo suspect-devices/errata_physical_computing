@@ -1,13 +1,15 @@
-\documentclass{article}
+\documentclass{report}
 \usepackage[utf8]{inputenc}
 \begin{document}
-\section{Chapter 4: The Microcontroller}
+\chapter{Chapter 4: The Microcontroller}
 <h2>``Hello World!'' is the Hard Part</h2>
 <p>I dont actually subscribe to this supposition. but thats ok.</p>
-<h3>Identifying the Pins on the Microcontroller (P51)</h3>
+
+\section{Identifying the Pins on the Microcontroller (P51)}
+
 <img class=" wp-image-17370 alignleft" alt="Atmega168PinMap2" src="../../../../../farm8.staticflickr.com/7101/7329403498_47d10925f3_b.jpg" width="717" height="554" />
 
-<h3>Hello (P57)</h3>
+\section{Hello (P57)
 The BASIC Stamp-like environments described in this section can be replaced by the Arduino IDE. After downloading and running the software according to the instructions at arduino.cc\footnote{http://arduino.cc/en/Main/Software#toc1 you should select the correct board and serial port from the tools menue and then select
 File→Examples→01.Basics→Blink
 
@@ -37,13 +39,13 @@ void loop() {
   delay(1000);               // wait for a second
 }
 \end{verbatim}
-\endsection
-\section{Chapter 5: Programming}
+
+\chapter{Chapter 5: Programming}
 <h2><a href="http://thingadayforever.files.wordpress.com/2013/02/physical-computing.jpg"><img class="alignright size-medium wp-image-15811" alt="physical-computing" src="../../../../../thingadayforever.files.wordpress.com/2013/02/physical-computing.jpg%3Fw=238" width="238" height="300" /></a>Errata for Chapter 5: Programming</h2>
 
 Chapter 5 is a lot of good grounding but its all written in dialects of basic. Here we have to do a little explaining as well as translating the code. I am splitting the chapter in half for this reason.
 
-<h2>Loops (p66)</h2>
+\subsection{Loops (p66)}
 The event loop that the book refers to is hidden by the Arduino IDE but the actual event loop used by the Arduino core version 1.0.3 uses a ``for'' loop.
 \begin{verbatim}
 for (;;) {
@@ -60,7 +62,7 @@ while(true)
 }
 \end{verbatim}
 
-<h2>If Statements (p67)</h2>
+\section{If Statements (p67)}
 \begin{verbatim}
 <pre>if (in6 == 1) {
    /*Statement1*/;
@@ -73,7 +75,7 @@ Please note the \verb|==| to indicate testing for equality. The statement
 would set the value of \verb|in6| to 1 and return 1, which would be true.
 The brackets above are optional if only one statement is part of the condition as you can see in the Code examples above however they do remove any potential ambiguity and I highly suggest you use them
 
-<h2>Variables (p69).</h2>
+\subsection{Variables (p69)}
 In the C language, variables must be declared with a type. They can be initialized and declared at the same time. In standard C they must be declared at the top of a function or, if global, outside of the function. In C++ (which the Arduino uses) they can be inserted as needed.
 \begin{verbatim}
 int Date=12;
@@ -106,28 +108,47 @@ void loop() {
 \end{verbatim}
 
 
-<h2>Built-in Routines: Subroutines and Functions.</h2>
-<p>In &#8216;c&#8217; subroutines are functions which return void as a result. The arduino &#8220;core&#8221; provides a rich set of built in functions to interact easily with pins. In addition the underlying gcc provides defines allowing you to interact directly with the processors registers.</p>
-<pre>digitalWrite(13,HIGH);
-PORTB |= _BV(0);</pre>
-<p>Both of the above set pin 0 of port b on the arduino to high.</p>
-<h3>Constants (p73)</h3>
-<p>Constants in c are handled by the pre processor which replaces the value before compiling the code. Unlike using variables, using preprocessor macroes does not cost you any memory to store the values. C Convention has macros in all caps.</p>
-<pre>#define MIN_PULSE 100
-PulseWidth = MIN_PULSE + angle;</pre>
-<p>Which would expand to</p>
-<pre>PulseWidth = 100 + angle;</pre>
-<h3>(p74)</h3>
-<pre>#define MY_FAVORITE_PIN_NO 14
+\section{Built-in Routines: Subroutines and Functions.}
+In the C language, subroutines are functions which return void as a result. The Arduino core provides a rich set of built in functions to interact easily with pins. In addition the underlying GCC compiler provides \verb|define| statements, allowing you to interact directly with the processor's registers.
+
+\begin{verbatim}
+digitalWrite(13,HIGH);
+PORTB |= _BV(0);
+\end{verbatim}
+
+Both statements set pin 0 of port B on the Arduino to high.
+
+\subsection{Constants (p73)}
+Constants in C are handled by the preprocessor which replaces the value before compiling the code. Unlike variables, preprocessor macros do not cost you any memory to store the values. C convention has the macro name in all caps.
+
+The two statements below:
+\begin{verbatim}
+#define MIN_PULSE 100
+PulseWidth = MIN_PULSE + angle;
+\end{verbatim}
+Would expand to:
+\begin{verbatim}
+PulseWidth = 100 + angle;
+\end{verbatim}
+
+\subsection{(p74)}
+\begin{verbatim}
+#define MY_FAVORITE_PIN_NO 14
 #define MY_FAVORITE_PINS PINB
 #define MY_FAVORITE_PIN PINB0
 printState=digitalRead(MY_FAVORITE_PIN_NO);
-printState=MY_FAVORITE_PINS &amp; _BV(MY_FAVORITE_PIN); // does more or less the same as the above.</pre>
-<p>C values are passed to routines through a stack and they become local to the function and go away when it exits. To get a function to modify a value like the examples at the bottom of page 74 you would pass the address of  the value that needs to be changed. This is called &#8220;pass by reference&#8221;</p>
-<pre>int sensor;
-rctime(5,1,&amp;sensor); // the and here means "the memory address of sensor"</pre>
-<h2><a href="http://thingadayforever.files.wordpress.com/2013/02/0203132245.jpg"><img class="alignright  wp-image-16482" alt="Homemade Routines" src="../../../../../thingadayforever.files.wordpress.com/2013/02/0203132245.jpg%3Fw=300" width="210" height="158" /></a>Homemade Routines</h2>
-<p>In C you can not use a function until you have declared it. The Arduino hides this from you by adding the declarations for you. For this reason you can write.</p>
+printState=MY_FAVORITE_PINS &amp; _BV(MY_FAVORITE_PIN); // does more or less the same as the above.
+\end{verbatim}
+C values are passed to routines through a stack and they become local to the function and go away when it exits. To get a function to modify a value like the examples at the bottom of page 74 you would pass the address of  the value that needs to be changed. This is called &#8220;pass by reference&#8221;</p>
+\begin{verbatim}
+int sensor;
+rctime(5,1,&amp;sensor); // the and here means "the memory address of sensor"
+\end{verbatim}
+
+\section{Homemade Routines}
+<a href="http://thingadayforever.files.wordpress.com/2013/02/0203132245.jpg"><img class="alignright  wp-image-16482" alt="Homemade Routines" src="../../../../../thingadayforever.files.wordpress.com/2013/02/0203132245.jpg%3Fw=300" width="210" height="158" /></a></h2>
+In C, you can not use a function until you have declared it. The Arduino hides this from you by adding the declarations for you. For this reason you can write
+\begin{verbatim}
 <pre>#define THANK_YOU_LIGHT 13
 void setup() {
 // your setup goes here. 
@@ -150,36 +171,46 @@ digitalWrite(THANK_YOU_LIGHT, HIGH);
    delay(1000);
    digitalWrite(THANK_YOU_LIGHT, LOW);
    delay(1000);
-};</pre>
-<p>However it is good form and never hurts to declare them.</p>
-<pre>#define THANK_YOU_LIGHT 13
+};
+\end{verbatim}
+
+However it is good form and never hurts to declare them.
+\begin{verbatim}
+#define THANK_YOU_LIGHT 13
 // routines defined in this file.
 void myThankYouRoutine();
 void setup();
 void loop();
 
 void setup() {
-   ...</pre>
-<h3>Advanced Loops:</h3>
-<p>The code below is the main program file from Arduino 22.</p>
-<pre>#include &lt;Wprogram.h&gt;
+   ...
+\end{verbatim}
+
+\subsection{Advanced Loops}
+The code below is the main program file from Arduino 22.
+\begin{verbatim}
+#include <Wprogram.h>
 
 int main(void)
 {
 	init();
 	setup();
 	for (;;)
-		loop();  
+		loop();
 	return 0;
-}</pre>
-<p>It uses a form of C&#8217;s for loop. This could have been done with a while(true) statement as well.</p>
-<h4>While-Wend Do-While(p77)</h4>
-<pre>while(digitalRead(5)==0) {
+}
+\end{verbatim}
+This uses a form of C's \verb|for| loop. This could have been done with a \verb|while(true)| statement as well.
+
+\subsubsection{While-Wend Do-While(p77)}
+\begin{verbatim}
+while(digitalRead(5)==0) {
     digitalWrite(6,HIGH);
     delay(250);
     digitalWrite(6,LOW);
     delay(250);
-}</pre>
+}
+\end{verbatim}
 <p>C also supports a do until loop structure.</p>
 <pre>do {
     //.... stuff to do here ...
