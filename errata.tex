@@ -1,0 +1,245 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\begin{document}
+\section{Chapter 4: The Microcontroller}
+<h2>``Hello World!'' is the Hard Part</h2>
+<p>I dont actually subscribe to this supposition. but thats ok.</p>
+<h3>Identifying the Pins on the Microcontroller (P51)</h3>
+<img class=" wp-image-17370 alignleft" alt="Atmega168PinMap2" src="../../../../../farm8.staticflickr.com/7101/7329403498_47d10925f3_b.jpg" width="717" height="554" />
+
+<h3>Hello (P57)</h3>
+The BASIC Stamp-like environments described in this section can be replaced by the Arduino IDE. After downloading and running the software according to the instructions at arduino.cc\footnote{http://arduino.cc/en/Main/Software#toc1 you should select the correct board and serial port from the tools menue and then select
+File→Examples→01.Basics→Blink
+
+\begin{verbatim}
+/*
+  Blink
+  Turns on an LED on for one second, then off for one second, repeatedly.
+
+  This example code is in the public domain.
+ */
+
+// Pin 13 has an LED connected on most Arduino boards including the Leonardo.
+// Give it a name:
+int led = 13;
+
+// The setup routine runs once when you press the reset button:
+void setup() {                
+  // initialize the digital pin as an output.
+  pinMode(led, OUTPUT);
+}
+
+// The loop routine runs over and over again forever:
+void loop() {
+  digitalWrite(led, HIGH);   // turn the LED on (HIGH is the voltage level)
+  delay(1000);               // wait for a second
+  digitalWrite(led, LOW);    // turn the LED off by making the voltage LOW
+  delay(1000);               // wait for a second
+}
+\end{verbatim}
+\endsection
+\section{Chapter 5: Programming}
+<h2><a href="http://thingadayforever.files.wordpress.com/2013/02/physical-computing.jpg"><img class="alignright size-medium wp-image-15811" alt="physical-computing" src="../../../../../thingadayforever.files.wordpress.com/2013/02/physical-computing.jpg%3Fw=238" width="238" height="300" /></a>Errata for Chapter 5: Programming</h2>
+
+Chapter 5 is a lot of good grounding but its all written in dialects of basic. Here we have to do a little explaining as well as translating the code. I am splitting the chapter in half for this reason.
+
+<h2>Loops (p66)</h2>
+The event loop that the book refers to is hidden by the Arduino IDE but the actual event loop used by the Arduino core version 1.0.3 uses a ``for'' loop.
+\begin{verbatim}
+for (;;) {
+  loop();
+  if (serialEventRun) serialEventRun();
+}
+\end{verbatim}
+
+This could also be written as
+\begin{verbatim}
+while(true)
+  loop();
+  if (serialEventRun) serialEventRun();
+}
+\end{verbatim}
+
+<h2>If Statements (p67)</h2>
+\begin{verbatim}
+<pre>if (in6 == 1) {
+   /*Statement1*/;
+}
+/*Statement2*/
+\end{verbatim}
+
+Please note the \verb|==| to indicate testing for equality. The statement
+\verb|if (in6 = 1)|
+would set the value of \verb|in6| to 1 and return 1, which would be true.
+The brackets above are optional if only one statement is part of the condition as you can see in the Code examples above however they do remove any potential ambiguity and I highly suggest you use them
+
+<h2>Variables (p69).</h2>
+In the C language, variables must be declared with a type. They can be initialized and declared at the same time. In standard C they must be declared at the top of a function or, if global, outside of the function. In C++ (which the Arduino uses) they can be inserted as needed.
+\begin{verbatim}
+int Date=12;
+int ticketValue = 250;
+int Fare=125
+\end{verbatim}
+
+Variable type sizes can be different between machines. In general an int is a short int which is usually 16 bits and a character is 8 bits but this is not guaranteed. Also integers can be either signed or unsigned. The arduino provides some types that help you specify exactly what you mean.
+
+\begin{verbatim}
+uint8_t Sensor; // an 8 bit unsigned variable
+uint8_t Ticket
+uint16_t Bigger; // this is a 16 bit unsigned variable
+\end{verbatim}
+
+The code on page71 could be written like this:
+\begin{verbatim}
+uint8_t ticketsSubmitted=0;
+uint8_t ticketSensor=0;
+
+void loop() {
+  if (ticketSensor==1) {
+       ticketsSubmitted++;
+  }
+  if (ticketSubmitted ==3) {
+       OpenGate();
+       ticketsSubmitted=0;
+  }
+}
+\end{verbatim}
+
+
+<h2>Built-in Routines: Subroutines and Functions.</h2>
+<p>In &#8216;c&#8217; subroutines are functions which return void as a result. The arduino &#8220;core&#8221; provides a rich set of built in functions to interact easily with pins. In addition the underlying gcc provides defines allowing you to interact directly with the processors registers.</p>
+<pre>digitalWrite(13,HIGH);
+PORTB |= _BV(0);</pre>
+<p>Both of the above set pin 0 of port b on the arduino to high.</p>
+<h3>Constants (p73)</h3>
+<p>Constants in c are handled by the pre processor which replaces the value before compiling the code. Unlike using variables, using preprocessor macroes does not cost you any memory to store the values. C Convention has macros in all caps.</p>
+<pre>#define MIN_PULSE 100
+PulseWidth = MIN_PULSE + angle;</pre>
+<p>Which would expand to</p>
+<pre>PulseWidth = 100 + angle;</pre>
+<h3>(p74)</h3>
+<pre>#define MY_FAVORITE_PIN_NO 14
+#define MY_FAVORITE_PINS PINB
+#define MY_FAVORITE_PIN PINB0
+printState=digitalRead(MY_FAVORITE_PIN_NO);
+printState=MY_FAVORITE_PINS &amp; _BV(MY_FAVORITE_PIN); // does more or less the same as the above.</pre>
+<p>C values are passed to routines through a stack and they become local to the function and go away when it exits. To get a function to modify a value like the examples at the bottom of page 74 you would pass the address of  the value that needs to be changed. This is called &#8220;pass by reference&#8221;</p>
+<pre>int sensor;
+rctime(5,1,&amp;sensor); // the and here means "the memory address of sensor"</pre>
+<h2><a href="http://thingadayforever.files.wordpress.com/2013/02/0203132245.jpg"><img class="alignright  wp-image-16482" alt="Homemade Routines" src="../../../../../thingadayforever.files.wordpress.com/2013/02/0203132245.jpg%3Fw=300" width="210" height="158" /></a>Homemade Routines</h2>
+<p>In C you can not use a function until you have declared it. The Arduino hides this from you by adding the declarations for you. For this reason you can write.</p>
+<pre>#define THANK_YOU_LIGHT 13
+void setup() {
+// your setup goes here. 
+}
+
+void loop() {
+   if (theySneezeOnYou) {
+     myThankYouRoutine();
+   }
+   if (theySneezeOnYou) {
+     myThankYouRoutine();
+   }
+   if (theySneezeOnYou) {
+     myThankYouRoutine();
+   }
+}
+
+void myThankYouRoutine() {
+digitalWrite(THANK_YOU_LIGHT, HIGH);
+   delay(1000);
+   digitalWrite(THANK_YOU_LIGHT, LOW);
+   delay(1000);
+};</pre>
+<p>However it is good form and never hurts to declare them.</p>
+<pre>#define THANK_YOU_LIGHT 13
+// routines defined in this file.
+void myThankYouRoutine();
+void setup();
+void loop();
+
+void setup() {
+   ...</pre>
+<h3>Advanced Loops:</h3>
+<p>The code below is the main program file from Arduino 22.</p>
+<pre>#include &lt;Wprogram.h&gt;
+
+int main(void)
+{
+	init();
+	setup();
+	for (;;)
+		loop();  
+	return 0;
+}</pre>
+<p>It uses a form of C&#8217;s for loop. This could have been done with a while(true) statement as well.</p>
+<h4>While-Wend Do-While(p77)</h4>
+<pre>while(digitalRead(5)==0) {
+    digitalWrite(6,HIGH);
+    delay(250);
+    digitalWrite(6,LOW);
+    delay(250);
+}</pre>
+<p>C also supports a do until loop structure.</p>
+<pre>do {
+    //.... stuff to do here ...
+} until (someThinIsTrue);</pre>
+<h4>For-Next (p78)</h4>
+<p>The basic code on p 78 would look like this in Arduino.</p>
+<pre>digitalWrite(5,HIGH);
+delay(1000);
+digitalWrite(6,HIGH);
+delay(1000);
+digitalWrite(7,HIGH);
+delay(1000);</pre>
+<p>Which in a C for loop would look more like this.</p>
+<pre>//... fragment ...
+uint8_t counter;
+//... later ...
+for (counter=0;counter&lt;=15;counter++) {
+   digitalWrite(counter+5,HIGH);
+   delay(1000);
+}</pre>
+<p>The for loop in C is a litte more flexible than the basic for .. next as we have already seen.</p>
+<p>Its basic form is</p>
+<pre>for( initialexpression; testexpression; iterateexpression)
+{
+   /*stuff to do*/;
+}</pre>
+<p>Where initialexpression is executed before the loop, then testexpression is evaluated to see if it is true, if if the stuff to do is done followed by iterateexpression .<br />
+<em>Note: that any or all of these expressions can be omitted and that if the test expression is omitted then it evaluates to true</em>.</p>
+<h3>Comments (p81)</h3>
+<p>Comments in C come in the traditional form /* comment */ and the newer C++ style // comment</p>
+<pre>/*
+ * This is a multi line comment. 
+ * The next line is starts the main "loop"
+ */
+void loop() {
+  if (ticketValue &gt; 0){ // check the tickets value
+     takeFare()
+  } // endif
+} /* end of main "loop" */</pre>
+<h3>Debugging (p82)</h3>
+<p>There is a common convention in the Arduino to assume that all debugging information should be printed to using Serial.print() and Serial.println(), this is a bad habit that you will see in almost every Arduino program.</p>
+<pre>serial.println("Hello World");
+Serial.println("start of routine");
+Serial.print("fare = ");
+Serial.println(fare, DEC);</pre>
+<p>With a little work a more flexible system can be worked out that not only distinguishes between printing and debugging but also allows you to point your debuggin messages where you want (or even turn them off).</p>
+<pre>#include &lt;stdarg.h&gt;
+void SerialPrintFormatted(char *fmt, ... ){
+        char tmp[128]; // resulting string limited to 128 chars
+        va_list args;
+        va_start (args, fmt );
+        vsnprintf(tmp, 128, fmt, args);
+        va_end (args);
+        Serial.println(tmp);
+}
+#define DEBUG(...) SerialPrintFormatted(__VA_ARGS__);</pre>
+<p>Then you can write</p>
+<pre>serial.println("Hello World");
+DEBUG("start of routine");
+DEBUG("fare = %d", fare);</pre>
+	
+\endsection
+\end{document}
