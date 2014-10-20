@@ -1,17 +1,19 @@
-\documentclass{report}
+\documentclass{book}
 \usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+
 \begin{document}
 \chapter{Chapter 4: The Microcontroller}
 <h2>``Hello World!'' is the Hard Part</h2>
-<p>I dont actually subscribe to this supposition. but thats ok.</p>
+I dont actually subscribe to this supposition. but thats ok.
 
 \section{Identifying the Pins on the Microcontroller (P51)}
 
-<img class=" wp-image-17370 alignleft" alt="Atmega168PinMap2" src="../../../../../farm8.staticflickr.com/7101/7329403498_47d10925f3_b.jpg" width="717" height="554" />
+\includegraphics[scale=0.25]{arduino_leonardo_pinout}
 
-\section{Hello (P57)
-The BASIC Stamp-like environments described in this section can be replaced by the Arduino IDE. After downloading and running the software according to the instructions at arduino.cc\footnote{http://arduino.cc/en/Main/Software#toc1 you should select the correct board and serial port from the tools menue and then select
-File→Examples→01.Basics→Blink
+\section{Hello (P57)}
+The BASIC Stamp-like environments described in this section can be replaced by the Arduino IDE. After downloading and running the software according to the instructions at arduino.cc\footnote{http://arduino.cc/en/Main/Software} you should select the correct board and serial port from the tools menu and then select
+File?Examples?01.Basics?Blink
 
 \begin{verbatim}
 /*
@@ -41,30 +43,27 @@ void loop() {
 \end{verbatim}
 
 \chapter{Chapter 5: Programming}
-<h2><a href="http://thingadayforever.files.wordpress.com/2013/02/physical-computing.jpg"><img class="alignright size-medium wp-image-15811" alt="physical-computing" src="../../../../../thingadayforever.files.wordpress.com/2013/02/physical-computing.jpg%3Fw=238" width="238" height="300" /></a>Errata for Chapter 5: Programming</h2>
-
 Chapter 5 is a lot of good grounding but its all written in dialects of basic. Here we have to do a little explaining as well as translating the code. I am splitting the chapter in half for this reason.
 
-\subsection{Loops (p66)}
-The event loop that the book refers to is hidden by the Arduino IDE but the actual event loop used by the Arduino core version 1.0.3 uses a ``for'' loop.
+\section{Loops (p66)}
+The event loop that the book refers to is hidden by the Arduino IDE but the actual event loop used by the Arduino core version 1.0.3 uses a ``for'' loop.
 \begin{verbatim}
 for (;;) {
   loop();
   if (serialEventRun) serialEventRun();
 }
 \end{verbatim}
-
-This could also be written as
+This can also be written as
 \begin{verbatim}
-while(true)
+while(true) {
   loop();
   if (serialEventRun) serialEventRun();
 }
 \end{verbatim}
 
-\section{If Statements (p67)}
+\section{{\texttt If} Statements (p67)}
 \begin{verbatim}
-<pre>if (in6 == 1) {
+if (in6 == 1) {
    /*Statement1*/;
 }
 /*Statement2*/
@@ -73,9 +72,9 @@ while(true)
 Please note the \verb|==| to indicate testing for equality. The statement
 \verb|if (in6 = 1)|
 would set the value of \verb|in6| to 1 and return 1, which would be true.
-The brackets above are optional if only one statement is part of the condition as you can see in the Code examples above however they do remove any potential ambiguity and I highly suggest you use them
+The brackets above are optional if only one statement is part of the condition as you can see in the code examples above however they do remove any potential ambiguity and I highly suggest you use them
 
-\subsection{Variables (p69)}
+\section{Variables (p69)}
 In the C language, variables must be declared with a type. They can be initialized and declared at the same time. In standard C they must be declared at the top of a function or, if global, outside of the function. In C++ (which the Arduino uses) they can be inserted as needed.
 \begin{verbatim}
 int Date=12;
@@ -83,7 +82,7 @@ int ticketValue = 250;
 int Fare=125
 \end{verbatim}
 
-Variable type sizes can be different between machines. In general an int is a short int which is usually 16 bits and a character is 8 bits but this is not guaranteed. Also integers can be either signed or unsigned. The arduino provides some types that help you specify exactly what you mean.
+Variable type sizes can be different between machines. In general an int is a short int which is usually 16 bits and a character is 8 bits but this is not guaranteed. Also integers can be either signed or unsigned. The Arduino provides some types that help you specify exactly what you mean.
 
 \begin{verbatim}
 uint8_t Sensor; // an 8 bit unsigned variable
@@ -131,25 +130,24 @@ Would expand to:
 PulseWidth = 100 + angle;
 \end{verbatim}
 
-\subsection{(p74)}
+\subsection{Using the pins (p74)}
 \begin{verbatim}
 #define MY_FAVORITE_PIN_NO 14
 #define MY_FAVORITE_PINS PINB
 #define MY_FAVORITE_PIN PINB0
 printState=digitalRead(MY_FAVORITE_PIN_NO);
-printState=MY_FAVORITE_PINS &amp; _BV(MY_FAVORITE_PIN); // does more or less the same as the above.
+printState=MY_FAVORITE_PINS &amp; _BV(MY_FAVORITE_PIN); // similar to the above
 \end{verbatim}
-C values are passed to routines through a stack and they become local to the function and go away when it exits. To get a function to modify a value like the examples at the bottom of page 74 you would pass the address of  the value that needs to be changed. This is called &#8220;pass by reference&#8221;</p>
+C values are passed to routines through a stack and they become local to the function and go away when it exits. To get a function to modify a value like the examples at the bottom of page 74 you would pass the address of the value that needs to be changed. This is called ``pass by reference''.
 \begin{verbatim}
 int sensor;
 rctime(5,1,&amp;sensor); // the and here means "the memory address of sensor"
 \end{verbatim}
 
-\section{Homemade Routines}
-<a href="http://thingadayforever.files.wordpress.com/2013/02/0203132245.jpg"><img class="alignright  wp-image-16482" alt="Homemade Routines" src="../../../../../thingadayforever.files.wordpress.com/2013/02/0203132245.jpg%3Fw=300" width="210" height="158" /></a></h2>
+\subsection{Homemade Routines}
 In C, you can not use a function until you have declared it. The Arduino hides this from you by adding the declarations for you. For this reason you can write
 \begin{verbatim}
-<pre>#define THANK_YOU_LIGHT 13
+#define THANK_YOU_LIGHT 13
 void setup() {
 // your setup goes here. 
 }
@@ -193,11 +191,11 @@ The code below is the main program file from Arduino 22.
 
 int main(void)
 {
-	init();
-	setup();
-	for (;;)
-		loop();
-	return 0;
+    init();
+    setup();
+    for (;;)
+        loop();
+    return 0;
 }
 \end{verbatim}
 This uses a form of C's \verb|for| loop. This could have been done with a \verb|while(true)| statement as well.
@@ -211,37 +209,51 @@ while(digitalRead(5)==0) {
     delay(250);
 }
 \end{verbatim}
-<p>C also supports a do until loop structure.</p>
-<pre>do {
+C also supports a do until loop structure.
+\begin{verbatim}
+do {
     //.... stuff to do here ...
-} until (someThinIsTrue);</pre>
-<h4>For-Next (p78)</h4>
-<p>The basic code on p 78 would look like this in Arduino.</p>
-<pre>digitalWrite(5,HIGH);
+} until (someThinIsTrue);
+\end{verbatim}
+
+\subsection{For-Next (p78)}
+The basic code on p 78 would look like this in Arduino.
+\begin{verbatim}
+digitalWrite(5,HIGH);
 delay(1000);
 digitalWrite(6,HIGH);
 delay(1000);
 digitalWrite(7,HIGH);
-delay(1000);</pre>
-<p>Which in a C for loop would look more like this.</p>
-<pre>//... fragment ...
+delay(1000);
+\end{verbatim}
+
+Which in a C for loop would look more like this.
+\begin{verbatim}
+//... fragment ...
 uint8_t counter;
 //... later ...
 for (counter=0;counter&lt;=15;counter++) {
    digitalWrite(counter+5,HIGH);
    delay(1000);
-}</pre>
-<p>The for loop in C is a litte more flexible than the basic for .. next as we have already seen.</p>
-<p>Its basic form is</p>
-<pre>for( initialexpression; testexpression; iterateexpression)
+}
+\end{verbatim}
+
+The for loop in C is a little more flexible than the basic for .. next as we have already seen.
+Its basic form is
+\begin{verbatim}
+for( initialexpression; testexpression; iterateexpression)
 {
    /*stuff to do*/;
-}</pre>
-<p>Where initialexpression is executed before the loop, then testexpression is evaluated to see if it is true, if if the stuff to do is done followed by iterateexpression .<br />
-<em>Note: that any or all of these expressions can be omitted and that if the test expression is omitted then it evaluates to true</em>.</p>
-<h3>Comments (p81)</h3>
-<p>Comments in C come in the traditional form /* comment */ and the newer C++ style // comment</p>
-<pre>/*
+}
+\end{verbatim}
+
+Where \verb|initial_expression| is executed before the loop, then \verb|testexpression| is evaluated to see if it is true, if if the stuff to do is done followed by \verb|iterateexpression| .<br />
+\emph{Note: that any or all of these expressions can be omitted and that if the test expression is omitted then it evaluates to true.}
+\section{Comments (p81)}
+
+Comments in C come in the traditional form /* comment */ and the newer C++ style // comment
+\begin{verbatim}
+/*
  * This is a multi line comment. 
  * The next line is starts the main "loop"
  */
@@ -249,15 +261,22 @@ void loop() {
   if (ticketValue &gt; 0){ // check the tickets value
      takeFare()
   } // endif
-} /* end of main "loop" */</pre>
-<h3>Debugging (p82)</h3>
-<p>There is a common convention in the Arduino to assume that all debugging information should be printed to using Serial.print() and Serial.println(), this is a bad habit that you will see in almost every Arduino program.</p>
-<pre>serial.println("Hello World");
+} /* end of main "loop" */
+
+\end{verbatim}
+\section{Debugging (p82)}
+
+There is a common convention in the Arduino to assume that all debugging information should be printed to using Serial.print() and Serial.println(), this is a bad habit that you will see in almost every Arduino program.
+\begin{verbatim}
+serial.println("Hello World");
 Serial.println("start of routine");
 Serial.print("fare = ");
-Serial.println(fare, DEC);</pre>
-<p>With a little work a more flexible system can be worked out that not only distinguishes between printing and debugging but also allows you to point your debuggin messages where you want (or even turn them off).</p>
-<pre>#include &lt;stdarg.h&gt;
+Serial.println(fare, DEC);
+\end{verbatim}
+
+With a little work a more flexible system can be worked out that not only distinguishes between printing and debugging but also allows you to point your debuggin messages where you want (or even turn them off).
+\begin{verbatim}
+#include &lt;stdarg.h&gt;
 void SerialPrintFormatted(char *fmt, ... ){
         char tmp[128]; // resulting string limited to 128 chars
         va_list args;
@@ -266,11 +285,14 @@ void SerialPrintFormatted(char *fmt, ... ){
         va_end (args);
         Serial.println(tmp);
 }
-#define DEBUG(...) SerialPrintFormatted(__VA_ARGS__);</pre>
-<p>Then you can write</p>
-<pre>serial.println("Hello World");
+#define DEBUG(...) SerialPrintFormatted(__VA_ARGS__);
+\end{verbatim}
+
+Then you can write
+\begin{verbatim}
+serial.println("Hello World");
 DEBUG("start of routine");
-DEBUG("fare = %d", fare);</pre>
-	
-\endsection
+DEBUG("fare = %d", fare);
+\end{verbatim}
+
 \end{document}
