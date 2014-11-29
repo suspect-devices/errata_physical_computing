@@ -126,11 +126,10 @@ And the code on page 71 could be written thusly:
       } 
     }
 
-Built-in Routines: Subroutines and Functions.
----------------------------------------------
+## Subroutines
 
 In C, subroutines are functions which return void as a result. The
-arduino “core” provides a rich set of built-in functions to interact
+Arduino core provides a rich set of built-in functions to interact
 easily with pins. In addition, the underlying GCC **EXPLAIN** provides defines
 that allow you to interact directly with the processors registers.
 
@@ -139,9 +138,9 @@ that allow you to interact directly with the processors registers.
 
 Both lines above set pin 0 of port B on the Arduino to high.
 
-### Constants (p73)
+## Constants (p73)
 
-Constants in C are handled by the preprocessor which replaces the value ** PHRASING IS UNCLEAR **
+Constants in C are handled by the preprocessor which replaces the value **PHRASING IS UNCLEAR**
 before compiling the code. Unlike using variables, using preprocessor
 macroes does not cost you any memory to store the values. C convention
 has macros in all caps.
@@ -153,7 +152,7 @@ Which would expand to
 
     PulseWidth = 100 + angle;
 
-#### Example (p74)
+### Example (p74)
 
     #define MY_FAVORITE_PIN_NO 14
     #define MY_FAVORITE_PINS PINB
@@ -285,7 +284,7 @@ the test expression is omitted, then it evaluates to true.
 If all expressions are ommitted, it becomes a while loop as
 seen at the beginning of the chapter.*
 
-### Comments (p81)
+## Comments (p81)
 
 Comments in C come in the traditional form /\* comment \*/ and the newer
 C++ style // comment
@@ -300,7 +299,7 @@ C++ style // comment
       } // endif
     } /* end of main "loop" */
 
-### Debugging (p82)
+## Debugging (p82)
 
 There is a common convention in the Arduino to assume that all debugging
 information should be printed with `Serial.print()` and
@@ -334,10 +333,10 @@ Then you can write
     DEBUG("fare = %d", fare);
 
 
-Chapter 6: The “Big Four”; Schematics Programs, and Transducers
+Chapter 6: The “Big Four”: Schematics, Programs, and Transducers
 ===============================================================
 
-### Example (p92)
+## Example (p92)
 
     /* ... include debug code from previous chapter ...*/
 
@@ -354,7 +353,7 @@ Chapter 6: The “Big Four”; Schematics Programs, and Transducers
        DEBUG("x = %d", x);
     };
 
-### Example (p94)
+## Example (p94)
 
     #define INPUT1 2
     #define INPUT1 4
@@ -389,7 +388,7 @@ Chapter 6: The “Big Four”; Schematics Programs, and Transducers
       }
     }
 
-### Example (p96)
+## Example (p96)
 
     void loop(){
        digitalWrite(25,0);
@@ -400,7 +399,7 @@ Chapter 6: The “Big Four”; Schematics Programs, and Transducers
        delay(200);
     }
 
-### Example (p102)
+## Example (p102)
 
     void loop(){
        digitalWrite(5,1);
@@ -411,7 +410,7 @@ Chapter 6: The “Big Four”; Schematics Programs, and Transducers
 
 Analog-to-Digital Converters (p108)
 ------------------------------------
-[![Photo on 2-5-13 at 5.48 PM \#2][]
+![Photo on 2-5-13 at 5.48 PM \#2][]
 
     /*... setup and debug here ...*/
 
@@ -618,11 +617,6 @@ the example below fairly trivial.
 Chapter 8: Physical Interaction Design
 =======================================
 
-
-Schematics Programs, and Transducers
-------------------------------------
-
-
 ### Multitasking (p191)
 
 The defines below allow you to normalize the way you build the circuit.
@@ -677,7 +671,7 @@ to ground with fewer components.
        }
     }
 
-### Edge Detection (p195):
+## Edge Detection (p195):
 
     #define INPUT_PIN 7
     #define SWITCH_ON LOW
@@ -708,7 +702,7 @@ to ground with fewer components.
 
     }
 
-### Finding Peeks in an Analog Signal (p202)
+## Finding Peeks in an Analog Signal (p202)
 
 ![Photo on 2-9-13 at 11.33 PM][]
     #define ANALOG_PIN 0
@@ -741,7 +735,7 @@ to ground with fewer components.
 
     }
 
-### Button Debouncing (p205)
+## Button Debouncing (p205)
 
     #define SWITCH_ON LOW
     void setup () {
@@ -760,9 +754,8 @@ to ground with fewer components.
       }
     }
 
-delisious
 
-### Smoothing, Sampling, and Averaging(p207)
+## Smoothing, Sampling, and Averaging (p207)
 
     #define ANALOG_PIN 0
     #define HISTORY_SIZE  4
@@ -801,8 +794,6 @@ delisious
       }
       return (uint16_t)(total/HISTORY_SIZE);
     }
-
-delicison
 
     uint16_t medianArray() {
       long int total = 0;
