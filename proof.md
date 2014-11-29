@@ -1,13 +1,13 @@
+title: 'Errata for Physical Computing'
 ---
-title: 'Chapter 8: Physical Interaction Design.'
 
 Chapter 4: The Microcontroller {.page-title itemprop="headline"}
 ==============================
 
-“Hello World!” Is the Hard Part
+“Hello World!” is the Hard Part
 --------------------------------
 
-I dont actually subscribe to this supposition. but thats ok.
+I don't actually subscribe to this supposition, but that's ok.
 
 ### Identifying the Pins on the Microcontroller (p51)
 
@@ -27,17 +27,17 @@ from the `Tools` menu and then select `File → Examples → 01.Basics → Blink
       This example code is in the public domain.
      */
 
-    // Pin 13 has an LED connected on most Arduino boards including the leonardo.
-    // give it a name:
+    // Pin 13 has an LED connected on most Arduino boards, including the Leonardo.
+    // Give it a name:
     int led = 13;
 
-    // the setup routine runs once when you press reset:
-    void setup() {                
+    // The setup routine runs once when you press reset:
+    void setup() {
       // initialize the digital pin as an output.
-      pinMode(led, OUTPUT);     
+      pinMode(led, OUTPUT);
     }
 
-    // the loop routine runs over and over again forever:
+    // The loop routine runs over and over again forever:
     void loop() {
       digitalWrite(led, HIGH);   // turn the LED on (HIGH is the voltage level)
       delay(1000);               // wait for a second
@@ -46,7 +46,7 @@ from the `Tools` menu and then select `File → Examples → 01.Basics → Blink
     }
 
 
-Chapter 5: Programming 
+Chapter 5: Programming
 =====================
 
 Chapter 5 has a lot of good starting material, but it's
@@ -57,7 +57,7 @@ Loops (p66)
 -----------
 
 The event loop that the book refers to is hidden by the Arduino IDE, but
-the event loop used by the Arduino core version 1.0.3 uses a
+the event loop used by the Arduino core version 1.0.3 uses a
 “for” loop.
 
     for (;;) {
@@ -65,7 +65,7 @@ the event loop used by the Arduino core version 1.0.3 uses a
       if (serialEventRun) serialEventRun();
     }
 
-This can also be written as
+This can also be written as:
 
     while(true)
       loop();
@@ -84,9 +84,9 @@ Please note the == to indicate testing for equality. The statement
 
     if (in6 = 1)
 
-would set the value of  *in6* to 1 and return 1 which would be true.
+would set the value of *in6* to 1 and return 1 which would be true.
 If only one statement is part of the condition, the brackets are optional
-(as you can see in the code examples above). However, they 
+(as you can see in the code examples above). However, they
 remove any potential ambiguity and I highly suggest you use them.
 
 Variables (p69)
@@ -108,7 +108,7 @@ The Arduino provides some types that help you specify exactly what you
 mean.
 
     uint8_t Sensor; // an 8 bit unsigned variable
-    uint8_t Ticket
+    uint8_t Ticket;
     uint16_t Bigger; // this is a 16 bit unsigned variable
 
 And the code on page 71 could be written thusly:
@@ -178,7 +178,7 @@ you can write.
 
     #define THANK_YOU_LIGHT 13
     void setup() {
-    // your setup goes here. 
+    // your setup goes here.
     }
 
     void loop() {
@@ -286,18 +286,18 @@ seen at the beginning of the chapter.*
 
 ## Comments (p81)
 
-Comments in C come in the traditional form /\* comment \*/ and the newer
-C++ style // comment
+Comments in C come in the traditional form `/\* comment \*/` and the newer
+C++ style `//`
 
     /*
-     * This is a multi line comment. 
+     * This is a multi line comment.
      * The next line is starts the main "loop"
      */
     void loop() {
       if (ticketValue > 0){ // check the tickets value
          takeFare()
       } // endif
-    } /* end of main "loop" */
+    } /* end of main loop */
 
 ## Debugging (p82)
 
@@ -434,7 +434,7 @@ is the Arduino documentation for RCTime.
      *   Allows digital pins to be used to read resistive analog sensors
      *   One advantage of this technique is that is can be used to read very wide ranging inputs.
      *   (The equivalent of 16 or 18 bit A/D)
-     *  
+     *
 
      Schematic
                       +5V
@@ -466,7 +466,7 @@ is the Arduino documentation for RCTime.
     void setup()                    // run once, when the sketch starts
     {
        Serial.begin(9600);
-       Serial.println("start");      // a personal quirk 
+       Serial.println("start");      // a personal quirk
     }
     void loop()                     // run over and over again
     {
@@ -488,7 +488,7 @@ is the Arduino documentation for RCTime.
           result++;
        }
 
-       return result;                   // report results   
+       return result;                   // report results
     }
 
 At this point, if its important to actually emulate RCTime, you
@@ -497,7 +497,7 @@ appropriate for your current platform.
 
 #### Pulse Width Modulation for Input (p111)
 
-For what it's worth, the Arduino also supports `pulseIn()`
+For what it's worth, the Arduino also supports `pulseIn()`
 
 ### LED Dimming (p114)
 
@@ -506,20 +506,20 @@ Mellis’s LED fade example code which is included with the Arduino. If you
 cut the bottom half of the loop where he walks the value back from
 bright to off. ** FRAGMENT ** See Also <http://arduino.cc/en/Tutorial/Fade>
 
-    int ledPin = 13;    // LED connected to digital pin 9
+    int ledPin = 13;	// LED connected to digital pin 9
 
-    void setup()  { 
-      // nothing happens in setup 
-    } 
+    void setup() {
+    	// nothing happens in setup
+    }
 
-    void loop()  { 
-      // fade in from min to max in increments of 5 points:
-      for(int fadeValue = 0 ; fadeValue <= 255; fadeValue +=5) { 
-        // sets the value (range from 0 to 255):
-        analogWrite(ledPin, fadeValue);         
-        // wait for 30 milliseconds to see the dimming effect    
-        delay(30);                            
-      } 
+    void loop() { 
+    	// fade in from min to max in increments of 5 points:
+    	for(int fadeValue = 0 ; fadeValue <= 255; fadeValue +=5) { 
+    	    // sets the value (range from 0 to 255):
+    	    analogWrite(ledPin, fadeValue);
+    	    // wait for 30 milliseconds to see the dimming effect
+    	    delay(30);
+    	}
     }
 
 For pins which have a \~ mark next to them on the Arduino, this is handled
@@ -542,18 +542,18 @@ interrupts.
     440, // A
     466, // A#
     494, // B
-    523  // C next octave
+    523  // C next octave
     };
 
     void setup() {
     }
     int thisNote;
     void loop() {
-       for(thisNote=0; thisNote<=9;thisNote++) {
-          tone(SPEAKER,note[thisNote]);
-         delay(1000);
-         //noTone(SPEAKER);
-      }
+    	for(thisNote=0; thisNote<=9;thisNote++) {
+    	    tone(SPEAKER,note[thisNote]);
+    	    delay(1000);
+    	    //noTone(SPEAKER);
+    	}
     }
 
 ### RC Servo Motors (p121)
@@ -564,22 +564,20 @@ interrupts.
     #define MAX_ANGLE 180
     #define SERVO_PIN
 
-    Servo myservo;  // create servo object to control a servo 
-    int pos = MIN_ANGLE;    // variable to store the servo position 
+    Servo myservo;		// create servo object to control a servo 
+    int pos = MIN_ANGLE;	// variable to store the servo position 
 
-    void setup() 
-    { 
-      myservo.attach(SERVO_PIN);  // attaches the servo on pin 9 to the servo object 
-    } 
+    void setup() {
+    	myservo.attach(SERVO_PIN); // attaches the servo on pin 9 to the servo object 
+    }
 
-    void loop() 
-    { 
-      for(pos = MIN_ANGLE; pos < MAX_ANGLE; pos += 1)  // goes from 0 degrees to 180 degrees 
-      {                                  // in steps of 1 degree 
-        myservo.write(pos);              // tell servo to go to position in variable 'pos' 
-        delay(15);                       // waits 15ms for the servo to reach the position 
-      } 
-     }
+    void loop() { 
+    	for(pos = MIN_ANGLE; pos < MAX_ANGLE; pos += 1) // goes from 0 degrees to 180 degrees 
+    	{   // in steps of 1 degree 
+    	    myservo.write(pos); // tell servo to go to position in variable 'pos'
+    	    delay(15);		// waits 15ms for the servo to reach the position
+    	}
+    }
 
 ### Scaling Functions (code, p130)
 
@@ -595,22 +593,20 @@ the example below fairly trivial.
     #define MIN_ANGLE 0
     #define MAX_ANGLE 180
 
-    Servo myservo;  // create servo object to control a servo 
-    int pos = MIN_ANGLE;    // variable to store the servo position 
-    int sensor = MIN_ANGLE;    // variable to store the sensor reading 
+    Servo myservo; 		// create servo object to control a servo 
+    int pos = MIN_ANGLE; 	// variable to store the servo position 
+    int sensor = MIN_ANGLE; 	// variable to store the sensor reading 
 
     void setup() 
     { 
-      myservo.attach(SERVO_PIN);  // attaches the servo on pin 9 to the servo object 
+    	    myservo.attach(SERVO_PIN); // attaches the servo on pin 9 to the servo object 
     } 
 
-    void loop() 
-    { sensor=analogRead(SENSOR_PIN);
-      if (sensor<MIN_SENSOR_READING) sensor=MIN_SENSOR_READING;
-      if (sensor>MAX_SENSOR_READING) sensor=MAX_SENSOR_READING;
-      myservo.write(map(MIN_SENSOR_READING,MAX_SENSOR_READING,MIN_ANGLE,MAX_ANGLE);
-      delay(20);                       // waits 15ms for the servo to reach the position 
-
+    void loop() { sensor=analogRead(SENSOR_PIN);
+    	    if (sensor<MIN_SENSOR_READING) sensor=MIN_SENSOR_READING;
+    	    if (sensor>MAX_SENSOR_READING) sensor=MAX_SENSOR_READING;
+    	    myservo.write(map(MIN_SENSOR_READING,MAX_SENSOR_READING,MIN_ANGLE,MAX_ANGLE);
+    	    delay(20);		// waits 15ms for the servo to reach the position 
     }
 
 
@@ -622,8 +618,8 @@ Chapter 8: Physical Interaction Design
 The defines below allow you to normalize the way you build the circuit.
 Generally, it is easier to pull current down for LEDs than it is to source it.
 Since the AVR has built in pull-up resistors, you can do a normally open switch
-to ground with fewer components. 
- 
+to ground with fewer components.
+
     #define INPUT_PIN 7
     #define LED_PIN 8
     #define LED_ON LOW
@@ -637,38 +633,38 @@ to ground with fewer components.
     uint16_t counter =1;
 
     void setup() {
-       pinMode (INPUT_PIN, INPUT);
-       digitalWrite(INPUT_PIN, HIGH); // enable pullup.
-       pinMode (LED_PIN, OUTPUT);
-       digitalWrite(LED_PIN, LED_OFF);
+    	pinMode (INPUT_PIN, INPUT);
+    	digitalWrite(INPUT_PIN, HIGH); // enable pullup.
+    	pinMode (LED_PIN, OUTPUT);
+    	digitalWrite(LED_PIN, LED_OFF);
     }
 
     void loop(){
-       if (digitalRead(INPUT_PIN)==SWITCH_ON) { 
-           needFlashingFlag=true;
-       }
-       if (needFlashingFlag) {
-         counter-=1;
-         if (!counter){
-           counter=1000;
-           if (timesFlashed < 3) {
-             if (ledState==LED_OFF) {
-               timesFlashed += 1;
-               ledState=LED_ON;
-               digitalWrite(LED_PIN,ledState);
-             } else {
-               ledState=LED_OFF;
-               digitalWrite(LED_PIN,ledState);
-             }
-           } else {
-             timesFlashed=0;
-             needFlashingFlag=false;
-             counter=1;
-             ledState=LED_OFF;
-             digitalWrite(LED_PIN,ledState);
-           }
-         }
-       }
+    	if (digitalRead(INPUT_PIN)==SWITCH_ON) {
+    		needFlashingFlag=true;
+    	}
+    	if (needFlashingFlag) {
+    		counter-=1;
+    		if (!counter){
+    		counter=1000;
+    		if (timesFlashed < 3) {
+    			if (ledState==LED_OFF) {
+    				timesFlashed += 1;
+    				ledState=LED_ON;
+    				digitalWrite(LED_PIN,ledState);
+    			} else {
+    				ledState=LED_OFF;
+    				digitalWrite(LED_PIN,ledState);
+    			}
+    		} else {
+    			timesFlashed=0;
+    			needFlashingFlag=false;
+    			counter=1;
+    			ledState=LED_OFF;
+    			digitalWrite(LED_PIN,ledState);
+    			}
+    		}
+    	}
     }
 
 ## Edge Detection (p195):
@@ -683,28 +679,28 @@ to ground with fewer components.
     uint8_t buttonCount;
 
     void setup(){
-      pinMode(INPUT_PIN, INPUT);;
-      digitalWrite(INPUT_PIN, HIGH);
+    	pinMode(INPUT_PIN, INPUT);;
+    	digitalWrite(INPUT_PIN, HIGH);
     }
 
     void loop (){
-      buttonState=digitalRead(INPUT_PIN);
-      if (buttonState != lastButtonState) {
-          if (buttonState == SWITCH_ON) {
-            buttonCount++;
-            DEBUG("Button is pressed");
-          } else {
-            DEBUG("Button is nos pressed");
-            DEBUG("Button hits: %d", buttonCount);
-          }
-          lastButtonState=buttonState;
-      }
-
+    	buttonState=digitalRead(INPUT_PIN);
+    	if (buttonState != lastButtonState) {
+    		if (buttonState == SWITCH_ON) {
+    			buttonCount++;
+    			DEBUG("Button is pressed");
+    		} else {
+    			DEBUG("Button is nos pressed");
+    			DEBUG("Button hits: %d", buttonCount);
+    		}
+    		lastButtonState=buttonState;
+    	}
     }
 
-## Finding Peeks in an Analog Signal (p202)
+## Finding Peaks in an Analog Signal (p202)
 
 ![Photo on 2-9-13 at 11.33 PM][]
+
     #define ANALOG_PIN 0
     #include "debug.h"
 
@@ -715,50 +711,50 @@ to ground with fewer components.
     uint16_t threshold=300;
 
     void setup(){
-      INIT_DEBUG();
+    	INIT_DEBUG();
     }
 
     void loop (){
-      sensorValue=analogRead(ANALOG_PIN);
-      DEBUG("%d",sensorValue);
-      if (sensorValue>=threshold+noise){
-        if (sensorValue>=lastSensorValue+noise){
-          peakValue=sensorValue;
-        }
-      } else {
-        if(peakValue >= threshold){
-          DEBUG("peak reading: %d", peakValue);
-        }
-        peakValue = 0;
-      }
-      lastSensorValue=sensorValue;
-
+    	sensorValue=analogRead(ANALOG_PIN);
+    	DEBUG("%d",sensorValue);
+    	if (sensorValue>=threshold+noise){
+    		if (sensorValue>=lastSensorValue+noise){
+    			peakValue=sensorValue;
+    		}
+    	} else {
+    		if(peakValue >= threshold){
+    			DEBUG("peak reading: %d", peakValue);
+    		}
+    	peakValue = 0;
+    	}
+    	lastSensorValue=sensorValue;
     }
 
 ## Button Debouncing (p205)
 
     #define SWITCH_ON LOW
     void setup () {
-      pinMode(SWITCH_PIN, INPUT);
-      digitalWrite(SWITCH_PIN, HIGH);
+    	pinMode(SWITCH_PIN, INPUT);
+    	digitalWrite(SWITCH_PIN, HIGH);
     }
 
     void loop(){
-      if(digitalRead(SWITCH_PIN) == SWITCH_ON){
-        delay(10);
-        if(digitalRead(SWITCH_PIN) == SWITCH_ON) {
-          switchOn=true;
-        }else{
-          switchOn=false;
-        }
-      }
+    	if(digitalRead(SWITCH_PIN) == SWITCH_ON){
+    		delay(10);
+    		if(digitalRead(SWITCH_PIN) == SWITCH_ON) {
+    			switchOn=true;
+    		} else {
+    			switchOn=false;
+    		}
+    	}
     }
 
 
 ## Smoothing, Sampling, and Averaging (p207)
 
-    #define ANALOG_PIN 0
-    #define HISTORY_SIZE  4
+```
+    #define ANALOG_PIN		0
+    #define HISTORY_SIZE	4
     #include "debug.h"
 
     uint8_t positionInPastArray=HISTORY_SIZE;
@@ -768,53 +764,54 @@ to ground with fewer components.
     uint16_t medianArray();
 
     void setup(){
-      INIT_DEBUG();
-      delay(500);
+    	INIT_DEBUG();
+    	delay(500);
     }
 
     void loop (){
-     uint16_t temp;
-     uint16_t average;
-     uint16_t median;
-     temp=analogRead(ANALOG_PIN);
-      if (++positionInPastArray >= HISTORY_SIZE) {
-          positionInPastArray=0;
-      }
-      past[positionInPastArray]=temp;
-      average=averageArray();
-      median=medianArray();
-      DEBUG("Average = %d Median = %d", average,median);
+    	uint16_t temp;
+    	uint16_t average;
+    	uint16_t median;
+    	temp=analogRead(ANALOG_PIN);
+    	if (++positionInPastArray >= HISTORY_SIZE) {
+    		positionInPastArray=0;
+    	}
+    	past[positionInPastArray]=temp;
+    	average=averageArray();
+    	median=medianArray();
+    	DEBUG("Average = %d Median = %d", average,median);
     }
 
     uint16_t averageArray() {
-      long int total = 0;
-      int i;
-      for (i=0;i<=HISTORY_SIZE;i++){
-        total+=past[i];
-      }
-      return (uint16_t)(total/HISTORY_SIZE);
-    }
+    	long int total = 0;
+    	int i;
+    	for (i=0;i<=HISTORY_SIZE;i++){
+    		total+=past[i];
+    	}
+    	return (uint16_t)(total/HISTORY_SIZE);
+    	    }
 
     uint16_t medianArray() {
-      long int total = 0;
-      int i,j;
-      int finger=-1;
-      for (i=0;i<=HISTORY_SIZE;i++){
-        for (i=0;j<=HISTORY_SIZE;j++){
-          if (past[i]>=past[j]){
-            finger++;
-          }
-        }
-        sortedPast[finger]=past[i];
-      }
-      for (i=0;i<=HISTORY_SIZE;i++){
-        DEBUG("sortedPast[%d]=%d",i,sortedPast[i]);
-      }
-      return (uint16_t)sortedPast[HISTORY_SIZE/2];
-    }
+    	int total = 0;
+    	int i,j;
+    	int finger=-1;
+    	for (i=0;i<=HISTORY_SIZE;i++){
+    		for (i=0;j<=HISTORY_SIZE;j++){
+    			if (past[i]>=past[j]){
+    				finger++;
+    			}
+    		}
+    		sortedPast[finger]=past[i];
+    	}
+    	for (i=0;i<=HISTORY_SIZE;i++){
+    		DEBUG("sortedPast[%d]=%d",i,sortedPast[i]);
+    	}
+    	return (uint16_t)sortedPast[HISTORY_SIZE/2];
+    	}
+```
 
 
-  [Atmega168PinMap2]: http://farm8.staticflickr.com/7101/7329403498_47d10925f3_b.jpg
+  [Atmega168PinMap2]: http://farm8.staticflickr.com/7101/7329403498_47d10925f3_b.jpg "Arduino Leonardo pin reference"
   [physical-computing]: http://thingadayforever.files.wordpress.com/2013/02/physical-computing.jpg?w=238
   [![physical-computing][]]: http://thingadayforever.files.wordpress.com/2013/02/physical-computing.jpg
   [Homemade Routines]: http://thingadayforever.files.wordpress.com/2013/02/0203132245.jpg?w=300
