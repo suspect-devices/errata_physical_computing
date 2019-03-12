@@ -1,7 +1,7 @@
 title: 'Errata for Physical Computing'
 ---
 
-Chapter 4: The Microcontroller {.page-title itemprop="headline"}
+Chapter 4: The Microcontroller 
 ==============================
 
 “Hello World!” is the Hard Part
